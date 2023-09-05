@@ -10,12 +10,12 @@ export default function SideBar() {
         <MenuList>
             <MenuItem>
                 <Typography fontSize="1.5rem">
-                    Флаги
+                    Прапори
                 </Typography>
             </MenuItem>
             <MenuItem>
                 <Typography fontSize="1.5rem">
-                    Музыка
+                    Музика
                 </Typography>
             </MenuItem>
             <MenuItem>
@@ -25,22 +25,22 @@ export default function SideBar() {
             </MenuItem>
             <MenuItem>
                 <Typography fontSize="1.5rem">
-                    Царство животных
+                    Царство тварин
                 </Typography>
             </MenuItem>        
             <MenuItem>
                 <Typography fontSize="1.5rem">
-                    Фильмы
+                    Фільми
                 </Typography>
             </MenuItem>
             <MenuItem>
                 <Typography fontSize="1.5rem">
-                    Еда мира
+                    Їжа світу
                 </Typography>
             </MenuItem>        
             <MenuItem>
                 <Typography fontSize="1.5rem">
-                    Искусство
+                    Мистецтво
                 </Typography>
             </MenuItem>
         </MenuList>
