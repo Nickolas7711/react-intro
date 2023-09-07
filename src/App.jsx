@@ -1,30 +1,29 @@
 import React from 'react';
 import './style.js';
-import { HeaderGrid, Item, SideBarGrid, MainGrid, FooterGrid, MainWrapp } from './style.js';
-import Header from './components/Header.jsx';
-import SideBar from './components/SideBar.jsx';
-import BoxCardQuiz from './pages/BoxCardQuiz.jsx';
+import NavState from './context/navState';
+import MainMenu from './components/MainMenu';
+import Footer from './components/Footer.jsx';
+import { FooterGrid, MainGrid, MainWrapp } from './style.js';
+import MainContent from './components/MainContent.jsx';
 
 
 
 
 function App() {
 
-  return (    
+  return ( 
     <MainWrapp container>
-  <HeaderGrid item xs={12}>  
-    <Header />
-  </HeaderGrid>
-  <SideBarGrid item xs={3}>
-   <SideBar />
-  </SideBarGrid>
-  <MainGrid item xs={9}>
-    <BoxCardQuiz />
-  </MainGrid>
-  <FooterGrid item xs={12}>
-    <Item>Footer</Item>
-  </FooterGrid>
-</MainWrapp>
+    <NavState>
+      <MainMenu />
+    </NavState>
+      < MainGrid item xs={8}>
+        < MainContent />
+      </MainGrid>
+    < FooterGrid item xs={12}>
+    <Footer />
+    </FooterGrid>
+        </ MainWrapp>   
+    
   );
 }
 
