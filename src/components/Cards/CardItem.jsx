@@ -6,28 +6,28 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export default function MainContent() {
+
+export default function CardItem({quizz}) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
-        component="img"
-        alt="green iguana"
-        height="140"
-        image="/static/images/cards/contemplative-reptile.jpg"
+        sx={{ height: 140 }}
+        image={quizz.img}
+        title={quizz.name}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+        {quizz.name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+        {quizz.description.slice(0, 100)}...
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        <Button size="small">Детальніше</Button>
+        <Button size="small">До вікторини</Button>
       </CardActions>
     </Card>
   );
 }
+
