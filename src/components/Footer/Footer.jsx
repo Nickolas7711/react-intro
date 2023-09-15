@@ -1,8 +1,9 @@
 import React from 'react';
 import AvatarFooter from './AvatarFooter';
-import { FooterContent, Logo, Telephone } from '../../style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone } from '@fortawesome/free-solid-svg-icons';
+import { Logo } from '../Header/style';
+import { FooterContent, Telephone } from './styled';
 
 function Footer() {
   return (

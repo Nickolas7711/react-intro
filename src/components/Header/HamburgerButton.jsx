@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { MenuContext } from '../../context/navState';
-import { Bar, MenuButton } from '../../style';
+import { Bar, MenuButton } from './style';
 
 const HamburgerButton = () => {
   const { isMenuOpen, toggleMenuMode } = useContext(MenuContext);

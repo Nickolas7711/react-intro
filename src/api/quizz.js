@@ -11,7 +11,7 @@ const quizz = {
         .catch((err) => {
             throw new Error(err);
         })
-       
-};
+
+    };
 
 export { quizz };

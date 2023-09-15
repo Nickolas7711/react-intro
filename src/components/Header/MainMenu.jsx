@@ -3,8 +3,9 @@ import useOnClickOutside from '../../hooks/onClickOutside';
 import { MenuContext } from '../../context/navState';
 import HamburgerButton from './HamburgerButton';
 import { SideMenu } from './SideMenu';
-import { HeaderGrid, Logo, Navbar, Navigation } from '../../style';
+import { Logo, Navbar, Navigation } from './style';
 import SearchAppBar from './SearhAppBar';
+import { HeaderGrid } from '../../style';
 
 const MainMenu = () => {
   const node = useRef();

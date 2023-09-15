@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Avatar } from '../../style';
+import { Avatar } from './styled';
 
 export default function AvatarFooter() {
     return (
