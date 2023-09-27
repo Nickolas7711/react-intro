@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Loading from '../../components/Loading';
 import { questions } from '../../api/questions';
-import { QuestionIneer, Questions } from '../../components/Question/styled';
+import { QuestionIneer, Questions } from './styled';
 import NotFound from '../../components/NotFound/NotFound';
 
 export default function Question() {
@@ -35,7 +35,7 @@ export default function Question() {
   }, [fetchQuestionList]);
 
   const startTimer = () => {
-    const startTime = Date.now(); // Используем const вместо let
+    const startTime = Date.now();
 
     return setInterval(() => {
       const currentTime = Date.now();
@@ -84,7 +84,7 @@ export default function Question() {
 
   return (
     <Questions>
-      <img src={currentQuestion.imagePath} alt="Изображение викторины" />
+      <img alt="Изображение викторины" />
       <div className="timer">
         Время: {totalTime} сек
       </div>

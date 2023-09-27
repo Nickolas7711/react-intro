@@ -33,6 +33,17 @@ export default function Quizz() {
     navigate(`/quizz/quizzQuestion/${params}`);
   };
 
+  const handleSelectQuizz = (quizz) => {
+    const params = {
+      id: quizz.id,
+      img: quizz.img,
+      title: quizz.name.titles.replaceAll(' ', '_').toLowerCase(),
+      description: quizz.description,
+      titles: quizz,
+    };
+    navigate(`/startQuestion/${params.title}`);
+  };
+
   if (loading) return < Loading />;
   if (error) return <p>{error}</p>;
   return (
@@ -45,6 +56,7 @@ export default function Quizz() {
         titles={quizz.title}
         description={quizz.description}
         handleNavigateQuestion={handleNavigateQuestion}
+        handleSelectQuizz={handleSelectQuizz}
         />
       ))}
     </>
