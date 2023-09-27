@@ -11,8 +11,6 @@ export default function Question() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [isCorrect, setIsCorrect] = useState(null);
   const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
   const navigate = useNavigate();
@@ -55,18 +53,14 @@ export default function Question() {
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questionList.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setSelectedAnswer(null);
-      setIsCorrect(null);
     } else {
       navigate(`/results?score=${correctAnswersCount}&time=${totalTime}`);
     }
   };
 
   const handleAnswerClick = (answer) => {
-    setSelectedAnswer(answer);
     const currentQuestion = questionList[currentQuestionIndex];
     const isAnswerCorrect = answer === currentQuestion.questions[0]?.answer;
-    setIsCorrect(isAnswerCorrect);
 
     if (isAnswerCorrect) {
       setCorrectAnswersCount(correctAnswersCount + 10);
@@ -82,7 +76,7 @@ export default function Question() {
 
   return (
     <Questions>
-      <img alt='Зображення вікторини' />
+      <img src='img' alt='Зображення вікторини' />
       <div className="timer">
         Час виконання вікторини: {totalTime} сек.
       </div>
@@ -96,9 +90,6 @@ export default function Question() {
             </li>
         ))}
       </QuestionIneer>
-      {selectedAnswer !== null && (
-        <p>{isCorrect ? 'Вірно!' : 'Невірно.'}</p>
-      )}
     </Questions>
   );
 }
