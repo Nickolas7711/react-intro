@@ -9,9 +9,9 @@ const Results = () => {
 
   return (
     <div className="results-container">
-      <h1>Результаты</h1>
-      <p>Ваши баллы: {score}</p>
-      <p>Затраченное время: {time} сек</p>
+      <h1>Результати</h1>
+      <p>Ваші бали: {score}</p>
+      <p>Витрачений час: {time} сек</p>
     </div>
   );
 };

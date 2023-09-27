@@ -6,8 +6,8 @@ export default function StartQuestion() {
 
   return (
     <div>
-      <img alt="Изображение викторины" />
-      <h1>Страница старта викторины для {quizz}</h1>
+      <img alt='зображення вікторини' />
+      <h1>Сторінка старту вікторини для {quizz}</h1>
         <Link to={`/quizzQuestion/${quizz}`}><button>Почати вікторину</button></Link>
     </div>
   );

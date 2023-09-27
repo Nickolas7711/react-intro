@@ -14,7 +14,7 @@ export default function Question() {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
   const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
-  const [totalTime, setTotalTime] = useState(0); // Общее время затраченное на ответ на все вопросы
+  const [totalTime, setTotalTime] = useState(0);
   const navigate = useNavigate();
 
   const fetchQuestionList = useCallback(async () => {
@@ -58,7 +58,6 @@ export default function Question() {
       setSelectedAnswer(null);
       setIsCorrect(null);
     } else {
-      // Если это последний вопрос, перейдите на страницу результатов, передав время totalTime
       navigate(`/results?score=${correctAnswersCount}&time=${totalTime}`);
     }
   };
@@ -70,10 +69,9 @@ export default function Question() {
     setIsCorrect(isAnswerCorrect);
 
     if (isAnswerCorrect) {
-      setCorrectAnswersCount(correctAnswersCount + 10); // Увеличиваем счетчик правильных ответов
+      setCorrectAnswersCount(correctAnswersCount + 10);
     }
 
-    // Переходим к следующему вопросу
     handleNextQuestion();
   };
 
@@ -84,9 +82,9 @@ export default function Question() {
 
   return (
     <Questions>
-      <img alt="Изображение викторины" />
+      <img alt='Зображення вікторини' />
       <div className="timer">
-        Время: {totalTime} сек
+        Час виконання вікторини: {totalTime} сек.
       </div>
       <h2>{currentQuestion.quizzName}</h2>
       <h1>{currentQuestion.questions[0]?.question}</h1>
@@ -99,7 +97,7 @@ export default function Question() {
         ))}
       </QuestionIneer>
       {selectedAnswer !== null && (
-        <p>{isCorrect ? 'Правильно!' : 'Неправильно.'}</p>
+        <p>{isCorrect ? 'Вірно!' : 'Невірно.'}</p>
       )}
     </Questions>
   );
