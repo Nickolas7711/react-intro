@@ -11,7 +11,6 @@ export default function Question() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-
   const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
   const navigate = useNavigate();
