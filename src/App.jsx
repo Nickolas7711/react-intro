@@ -4,6 +4,7 @@ import Template from './components/Templates/Template';
 import QuizzQuestion from './components/Routes/QuizzQuestion';
 import NotFound from './components/NotFound/NotFound';
 import Quizz from './pages/continents/Quizz';
+import Results from './pages/continents/Results';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route element={<Template />}>
         <Route path='/' element={<Quizz />} />
         <Route path='/quizz/*' element={<QuizzQuestion />} />
+        <Route path='/results' element={<Results />} />
         </Route>
       </Routes>
     </BrowserRouter>

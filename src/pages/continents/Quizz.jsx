@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import CardItem from '../../components/Cards/CardItem';
 import { quizz } from '../../api/quizz';
 import Loading from '../../components/Loading';
+import NotFound from '../../components/NotFound/NotFound';
 
 export default function Quizz() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export default function Quizz() {
       const response = await quizz.get();
       setQuizzList(response);
     } catch (err) {
-      setError(err.message);
+      setError(<NotFound />);
     } finally {
       setLoading(false);
     }

@@ -1,17 +1,21 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Loading from '../../components/Loading';
 import { questions } from '../../api/questions';
 import { QuestionIneer, Questions } from '../../components/Question/styled';
+import NotFound from '../../components/NotFound/NotFound';
 
 export default function Question() {
-  const { quizz, img } = useParams();
+  const { quizz } = useParams();
   const [questionList, setQuestionList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isCorrect, setIsCorrect] = useState(null);
+  const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
+  const [totalTime, setTotalTime] = useState(0); // Общее время затраченное на ответ на все вопросы
+  const navigate = useNavigate();
 
   const fetchQuestionList = useCallback(async () => {
     setLoading(true);
@@ -20,7 +24,7 @@ export default function Question() {
       const response = await questions.get(quizz.toLowerCase().replaceAll(' ', ''));
       setQuestionList(response);
     } catch (err) {
-      setError(err.message);
+      setError(<NotFound />);
     } finally {
       setLoading(false);
     }
@@ -30,18 +34,47 @@ export default function Question() {
     fetchQuestionList();
   }, [fetchQuestionList]);
 
+  const startTimer = () => {
+    const startTime = Date.now(); // Используем const вместо let
+
+    return setInterval(() => {
+      const currentTime = Date.now();
+      const elapsedTime = Math.floor((currentTime - startTime) / 1000);
+      setTotalTime(elapsedTime);
+    }, 1000);
+  };
+
+  useEffect(() => {
+    const intervalId = startTimer();
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questionList.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setSelectedAnswer(null);
       setIsCorrect(null);
+    } else {
+      // Если это последний вопрос, перейдите на страницу результатов, передав время totalTime
+      navigate(`/results?score=${correctAnswersCount}&time=${totalTime}`);
     }
   };
 
   const handleAnswerClick = (answer) => {
     setSelectedAnswer(answer);
     const currentQuestion = questionList[currentQuestionIndex];
-    setIsCorrect(answer === currentQuestion.questions[0]?.answer);
+    const isAnswerCorrect = answer === currentQuestion.questions[0]?.answer;
+    setIsCorrect(isAnswerCorrect);
+
+    if (isAnswerCorrect) {
+      setCorrectAnswersCount(correctAnswersCount + 10); // Увеличиваем счетчик правильных ответов
+    }
+
+    // Переходим к следующему вопросу
+    handleNextQuestion();
   };
 
   if (loading) return <Loading />;
@@ -51,27 +84,22 @@ export default function Question() {
 
   return (
     <Questions>
-      <img src={img} alt="Изображение викторины" /> {/* Вставляем изображение здесь */}
+      <img src={currentQuestion.imagePath} alt="Изображение викторины" />
+      <div className="timer">
+        Время: {totalTime} сек
+      </div>
       <h2>{currentQuestion.quizzName}</h2>
       <h1>{currentQuestion.questions[0]?.question}</h1>
       <QuestionIneer>
-          {currentQuestion.answers[0]
-          && Object.values(currentQuestion.answers[0]).map((answer, index) => (
-              <li
-                key={index}
-                onClick={() => handleAnswerClick(answer)}
-              >
-                {answer}
-              </li>
-          ))}
+        {currentQuestion.answers[0]
+        && Object.values(currentQuestion.answers[0]).map((answer, index) => (
+            <li key={index} onClick={() => handleAnswerClick(answer)}>
+              {answer}
+            </li>
+        ))}
       </QuestionIneer>
       {selectedAnswer !== null && (
         <p>{isCorrect ? 'Правильно!' : 'Неправильно.'}</p>
-      )}
-      {currentQuestionIndex < questionList.length - 1 ? (
-        <button onClick={handleNextQuestion}>Наступне</button>
-      ) : (
-        <p>Вы ответили на все вопросы.</p>
       )}
     </Questions>
   );
