@@ -78,7 +78,7 @@ export default function Question() {
     <Questions>
       <img src='img' alt='Зображення вікторини' />
       <div className="timer">
-        Час виконання вікторини: {totalTime} сек.
+        Час виконання: {totalTime} сек.
       </div>
       <h2>{currentQuestion.quizzName}</h2>
       <h1>{currentQuestion.questions[0]?.question}</h1>
