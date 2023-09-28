@@ -76,7 +76,7 @@ export default function Question() {
 
   return (
     <Questions>
-      <img src='img' alt='Зображення вікторини' />
+      <img src='img' alt='Зображення віктор' />
       <div className="timer">
         Час виконання вікторини: {totalTime} сек.
       </div>
