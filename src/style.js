@@ -20,6 +20,7 @@ export const MainGrid = styled(Grid)(() => ({
   padding: '30px',
   backgroundColor: 'white',
   minHeight: '70%',
+  overflow: 'auto',
   alignItems: 'center',
 }));
 
@@ -30,7 +31,6 @@ export const Item = styled('div')(() => ({
   flexWrap: 'wrap',
   gap: '30px',
   height: 'auto',
-  width: 'auto',
 }));
 
 export const FooterGrid = styled(Grid)(() => ({

@@ -18,4 +18,5 @@ export const FooterContent = styled('div')(() => ({
   flexDirection: 'row',
   justifyContent: 'space-around',
   alignItems: 'center',
+  flexWrap: 'wrap',
 }));

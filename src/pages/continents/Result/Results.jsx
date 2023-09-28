@@ -1,19 +1,27 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
-const Results = () => {
+function formatTime(seconds) {
+  if (seconds < 60) {
+    return `${seconds} сек.`;
+  }
+
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes} мин. ${remainingSeconds} сек.`;
+}
+
+export default function Results() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const score = parseInt(searchParams.get('score'), 10);
-  const time = parseInt(searchParams.get('time'), 10);
+  const score = searchParams.get('score');
+  const time = searchParams.get('time');
 
   return (
-    <div className="results-container">
+    <div>
       <h1>Результати</h1>
-      <p>Ваші бали: {score}</p>
-      <p>Витрачений час: {time} сек</p>
+      <p>Ви набрали: {score} балів</p>
+      <p>Використаний час: {formatTime(3600 - time)}</p>
     </div>
   );
-};
-
-export default Results;
+}
