@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Loading from '../../components/Loading';
 import { questions } from '../../api/questions';
-import { QuestionIneer, Questions } from './styled';
+import { QuestImages, QuestionIneer, Questions } from './styled';
 import NotFound from '../../components/NotFound/NotFound';
 
 export default function Question() {
@@ -12,8 +12,9 @@ export default function Question() {
   const [error, setError] = useState('');
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
-  const [totalTime, setTotalTime] = useState(0);
+  const [totalTime, setTotalTime] = useState(60 * 60);
   const navigate = useNavigate();
+  const [img, setImg] = useState('');
 
   const fetchQuestionList = useCallback(async () => {
     setLoading(true);
@@ -21,6 +22,7 @@ export default function Question() {
     try {
       const response = await questions.get(quizz.toLowerCase().replaceAll(' ', ''));
       setQuestionList(response);
+      setImg(response[0]?.img);
     } catch (err) {
       setError(<NotFound />);
     } finally {
@@ -32,23 +34,22 @@ export default function Question() {
     fetchQuestionList();
   }, [fetchQuestionList]);
 
-  const startTimer = () => {
-    const startTime = Date.now();
-
-    return setInterval(() => {
-      const currentTime = Date.now();
-      const elapsedTime = Math.floor((currentTime - startTime) / 1000);
-      setTotalTime(elapsedTime);
-    }, 1000);
-  };
-
   useEffect(() => {
-    const intervalId = startTimer();
+    const intervalId = setInterval(() => {
+      setTotalTime((prevTime) => {
+        if (prevTime <= 0) {
+          clearInterval(intervalId);
+          navigate(`/results?score=${correctAnswersCount}&time=0`);
+          return 0;
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
 
     return () => {
       clearInterval(intervalId);
     };
-  }, []);
+  }, [correctAnswersCount, navigate]);
 
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questionList.length - 1) {
@@ -73,22 +74,26 @@ export default function Question() {
   if (error) return <p>{error}</p>;
 
   const currentQuestion = questionList[currentQuestionIndex];
+  const minutes = Math.floor(totalTime / 60);
+  const seconds = totalTime % 60;
 
   return (
     <Questions>
-      <img src='img' alt='Зображення вікторини' />
+      <QuestImages>
+        <img src={img} alt='Зображення вікторини' />
+      </QuestImages>
       <div className="timer">
-        Час виконання вікторини: {totalTime} сек.
+        Час до завершення: {minutes} хв. {seconds} сік.
       </div>
       <h2>{currentQuestion.quizzName}</h2>
       <h1>{currentQuestion.questions[0]?.question}</h1>
       <QuestionIneer>
         {currentQuestion.answers[0]
-        && Object.values(currentQuestion.answers[0]).map((answer, index) => (
-            <li key={index} onClick={() => handleAnswerClick(answer)}>
-              {answer}
-            </li>
-        ))}
+          && Object.values(currentQuestion.answers[0]).map((answer, index) => (
+              <li key={index} onClick={() => handleAnswerClick(answer)}>
+                {answer}
+              </li>
+          ))}
       </QuestionIneer>
     </Questions>
   );
