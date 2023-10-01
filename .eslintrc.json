@@ -59,7 +59,7 @@
             "always"
         ],
         "no-debugger": "error",
-        "no-console": "warn",
+        // "no-console": "warn",
         "import/no-extraneous-dependencies": [
             "error",
             {

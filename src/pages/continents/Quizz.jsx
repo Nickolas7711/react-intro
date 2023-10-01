@@ -1,15 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import CardItem from '../../components/Cards/CardItem';
 import { quizz } from '../../api/quizz';
 import Loading from '../../components/Loading';
 import NotFound from '../../components/NotFound/NotFound';
 
 export default function Quizz() {
+  const store = useSelector((state) => state);
   const navigate = useNavigate();
   const [quizzList, setQuizzList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
+  console.log(store);
 
   const fetchQuizzList = useCallback(async () => {
     setLoading(true);
