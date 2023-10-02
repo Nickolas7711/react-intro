@@ -1,59 +1,63 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../../components/Loading';
+import NotFound from '../../components/NotFound/NotFound';
+import {
+  setQuestionList,
+  setCurrentQuestionIndex,
+  setCorrectAnswersCount,
+  setTotalTime,
+  setImg,
+  setError,
+} from '../../store/services/questions/actions';
 import { questions } from '../../api/questions';
 import { QuestImages, QuestionIneer, Questions } from './styled';
-import NotFound from '../../components/NotFound/NotFound';
 
 export default function Question() {
   const { quizz } = useParams();
-  const [questionList, setQuestionList] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
-  const [totalTime, setTotalTime] = useState(60 * 60);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [img, setImg] = useState('');
+
+  const {
+    questionList,
+    currentQuestionIndex,
+    correctAnswersCount,
+    totalTime,
+    img,
+    error,
+  } = useSelector((state) => state.questionsReducer);
 
   const fetchQuestionList = useCallback(async () => {
-    setLoading(true);
-
     try {
       const response = await questions.get(quizz.toLowerCase().replaceAll(' ', ''));
-      setQuestionList(response);
-      setImg(response[0]?.img);
+      dispatch(setQuestionList(response));
+      dispatch(setImg(response[0]?.img));
     } catch (err) {
-      setError(<NotFound />);
-    } finally {
-      setLoading(false);
+      dispatch(setError(<NotFound />));
     }
-  }, [quizz]);
+  }, [dispatch, quizz]);
 
   useEffect(() => {
     fetchQuestionList();
   }, [fetchQuestionList]);
 
   useEffect(() => {
+    if (totalTime <= 0) {
+      navigate(`/results?score=${correctAnswersCount}&time=0`);
+    }
     const intervalId = setInterval(() => {
-      setTotalTime((prevTime) => {
-        if (prevTime <= 0) {
-          clearInterval(intervalId);
-          navigate(`/results?score=${correctAnswersCount}&time=0`);
-          return 0;
-        }
-        return prevTime - 1;
-      });
+      dispatch(setTotalTime(totalTime - 1));
     }, 1000);
 
     return () => {
       clearInterval(intervalId);
     };
-  }, [correctAnswersCount, navigate]);
+  }, [correctAnswersCount, dispatch, navigate, totalTime]);
 
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questionList.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      dispatch(setCurrentQuestionIndex(currentQuestionIndex + 1));
     } else {
       navigate(`/results?score=${correctAnswersCount}&time=${totalTime}`);
     }
@@ -64,13 +68,13 @@ export default function Question() {
     const isAnswerCorrect = answer === currentQuestion.questions[0]?.answer;
 
     if (isAnswerCorrect) {
-      setCorrectAnswersCount(correctAnswersCount + 10);
+      dispatch(setCorrectAnswersCount(correctAnswersCount + 10));
     }
 
     handleNextQuestion();
   };
 
-  if (loading) return <Loading />;
+  if (!questionList || questionList.length === 0) return <Loading />;
   if (error) return <p>{error}</p>;
 
   const currentQuestion = questionList[currentQuestionIndex];

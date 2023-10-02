@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { moduleName } from './constants';
 import { quizz } from '../../../api/quizz';
+import { quizzName } from './constants';
 
-const fetchQuizz = createAsyncThunk(`${moduleName}/fetchQuizz`, async () => {
+const fetchQuizz = createAsyncThunk(`${quizzName}/fetchQuizz`, async () => {
   const response = await quizz.get();
   return response;
 });

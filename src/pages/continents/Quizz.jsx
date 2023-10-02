@@ -1,32 +1,33 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {
+  useCallback, useEffect, useMemo, useState,
+} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CardItem from '../../components/Cards/CardItem';
-import { quizz } from '../../api/quizz';
 import Loading from '../../components/Loading';
 import NotFound from '../../components/NotFound/NotFound';
+import thunks from '../../store/services/quizzs/thunks';
 
 export default function Quizz() {
-  const store = useSelector((state) => state);
+  const { quizz, filterQuizz, filter } = useSelector((state) => state.quizzsReducer);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [quizzList, setQuizzList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  console.log(store);
+  const quizzList = useMemo(() => (filter ? filterQuizz : quizz), [quizz, filter, filterQuizz]);
 
   const fetchQuizzList = useCallback(async () => {
     setLoading(true);
 
     try {
-      const response = await quizz.get();
-      setQuizzList(response);
+      await dispatch(thunks.fetchQuizz());
     } catch (err) {
       setError(<NotFound />);
     } finally {
       setLoading(false);
     }
-  }, [setQuizzList, setError, setLoading]);
+  }, [dispatch]);
 
   useEffect(() => {
     fetchQuizzList();

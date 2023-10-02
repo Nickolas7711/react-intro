@@ -1,7 +1,7 @@
 import { createAction } from '@reduxjs/toolkit';
-import { moduleName } from './constants';
+import { quizzName } from './constants';
 
-const filterAction = createAction(`${moduleName}/filterAction`, (payload) => ({ payload }));
+const filterAction = createAction(`${quizzName}/filterAction`, (payload) => ({ payload }));
 
 export default {
   filterAction,
