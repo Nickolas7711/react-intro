@@ -81,6 +81,8 @@ export default function Question() {
   const minutes = Math.floor(totalTime / 60);
   const seconds = totalTime % 60;
 
+  console.log('img:', img);
+
   return (
     <Questions>
       <QuestImages>

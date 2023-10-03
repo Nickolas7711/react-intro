@@ -5,6 +5,7 @@ import { quizzName } from './constants';
 
 const initialState = {
   quizz: [],
+  img: '',
   filter: '',
   filterQuizz: [],
 };
