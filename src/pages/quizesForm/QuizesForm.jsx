@@ -25,7 +25,7 @@ const QuizesForm = () => {
       <InputText
             fullWidth
             control={control}
-            name='quizz'
+            name='title'
             rules={quizRules.quizz}
             label='Назва вікторіни'
           />

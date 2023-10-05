@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createQuizz } from './actions';
+import { quizzName } from '../quizzs/constants';
 
 const initialState = {
   isLoading: false,
@@ -8,7 +9,7 @@ const initialState = {
 };
 
 const quizzesSlice = createSlice({
-  name: 'quizzes',
+  name: quizzName,
   initialState,
   reducers: {},
   extraReducers: (builder) => {
