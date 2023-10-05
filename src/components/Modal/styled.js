@@ -42,8 +42,8 @@ export const PaperContent = styled('div')(() => ({
   gap: '20px',
 
   img: {
-    width: '80%',
-    height: '50%',
+    width: '40vw',
+    height: '20vw',
     borderRadius: '20px',
     boxShadow: '0 20px 16px -16px rgba(0,0,0,0.6)',
   },

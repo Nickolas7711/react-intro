@@ -34,7 +34,7 @@ const QuizesForm = () => {
             control={control}
             name='description'
             rules={quizRules.description}
-            label='Опис'
+            label='Опис вікторини'
           />
           <InputText
             fullWidth

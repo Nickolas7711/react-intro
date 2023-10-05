@@ -16,7 +16,13 @@ const TextareaText = ({
   rules={rules}
   render={(({ field: { onChange, value, ref }, fieldState: { error } }) => (
     <TextField
-    minRows={10}
+    multiline
+      sx={{
+        '& textarea': {
+          resize: 'both',
+        },
+      }}
+    minRows={8}
     label={label}
     value={value}
     inputRef={ref}
