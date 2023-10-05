@@ -33,6 +33,10 @@ export const QuestImages = styled('div')(() => ({
 
 }));
 
+export const Timer = styled('div')(() => ({
+  fontSize: '40px',
+}));
+
 export const Questions = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
