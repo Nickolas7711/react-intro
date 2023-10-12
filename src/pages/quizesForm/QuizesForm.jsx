@@ -9,13 +9,18 @@ import TextareaText from '../../components/Forms/TextareaText';
 import { createQuizz } from '../../store/services/creatQuizz/actions';
 
 const QuizesForm = () => {
-  const { control, handleSubmit, getValues } = useForm();
+  const {
+    control,
+    handleSubmit,
+    reset,
+    getValues,
+  } = useForm();
   const dispatch = useDispatch();
 
   const onSubmit = () => {
-    console.log(getValues());
     const formData = getValues();
     dispatch(createQuizz(formData));
+    reset();
   };
 
   return (
