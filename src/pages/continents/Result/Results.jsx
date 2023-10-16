@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { ResyltInner } from './style';
 
 function formatTime(seconds) {
   if (seconds < 60) {
@@ -18,10 +19,11 @@ export default function Results() {
   const time = searchParams.get('time');
 
   return (
-    <div>
+    <ResyltInner>
+      <img style={{ width: '25vw', height: '25vw' }} src='../../monkey.gif'></img>
       <h1>Результати</h1>
       <p>Ви набрали: {score} балів</p>
       <p>Використаний час: {formatTime(3600 - time)}</p>
-    </div>
+    </ResyltInner>
   );
 }

@@ -36,6 +36,7 @@ export default function Quizz() {
   const handleNavigateQuestion = (title) => {
     const params = title.replaceAll(' ', '_').toLowerCase();
     navigate(`/quizz/quizzQuestion/${params}`);
+    window.location.reload();
   };
 
   if (loading) return < Loading />;

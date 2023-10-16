@@ -33,6 +33,13 @@ export const QuestImages = styled('div')(() => ({
 
 }));
 
+export const Timer = styled('div')(() => ({
+  fontSize: '40px',
+  fontFamily: 'Dela Gothic One',
+  color: '#1976d2',
+  textShadow: '4 5px 6px grey',
+}));
+
 export const Questions = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',

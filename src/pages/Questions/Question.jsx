@@ -12,7 +12,12 @@ import {
   setError,
 } from '../../store/services/questions/actions';
 import { questions } from '../../api/questions';
-import { QuestImages, QuestionIneer, Questions } from './styled';
+import {
+  QuestImages,
+  QuestionIneer,
+  Questions,
+  Timer,
+} from './styled';
 
 export default function Question() {
   const { quizz } = useParams();
@@ -81,16 +86,14 @@ export default function Question() {
   const minutes = Math.floor(totalTime / 60);
   const seconds = totalTime % 60;
 
-  console.log('img:', img);
-
   return (
     <Questions>
       <QuestImages>
         <img src={img} alt='Зображення вікторини' />
       </QuestImages>
-      <div className="timer">
-        Час до завершення: {minutes} хв. {seconds} сік.
-      </div>
+      <Timer>
+        {minutes} : {seconds}
+      </Timer>
       <h2>{currentQuestion.quizzName}</h2>
       <h1>{currentQuestion.questions[0]?.question}</h1>
       <QuestionIneer>
